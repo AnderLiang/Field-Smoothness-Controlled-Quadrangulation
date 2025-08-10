@@ -10,6 +10,8 @@ This repository is an implementation of [Field Smoothness-Controlled Partition f
 
 Project homepage：[homepage](http://staff.ustc.edu.cn/~fuxm/projects/FSCQ/FSCQ.html)
 
+8700 Dataset：[Dataset](https://rec.ustc.edu.cn/share/579773f0-7588-11f0-b307-c7c159138de8)，Passcode ：8700
+
 ![Our generated high-quality quad meshes](img/fig1.png)
 
 ### Overview
