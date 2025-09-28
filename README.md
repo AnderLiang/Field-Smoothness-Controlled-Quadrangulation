@@ -33,14 +33,19 @@ git clone https://github.com/AnderLiang/Field-Smoothness-Controlled-Quadrangulat
 The input mesh must be a manifold surface. Add it to the `/data/input` directory, and then execute:
 ```bash
 cd bin
-./fscq.sh -a
+./fscq.sh -a 0 6
 ./analyse_result.sh 0 0 0
 ```
 
 
-
 The final results can be viewed in the `/data/post_process` directory, and static analysis results are located in the `/data/result_analysis` directory.
 
+If you want to use the 8700 dataset's models, you can add the .obj and the .sharp file to `/data/origin` directory, and then execute:
+```bash
+cd bin
+./fscq.sh -a 1 6
+./analyse_result.sh 0 0 0
+```
 
 
 ## Citation

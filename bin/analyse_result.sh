@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for file in ../data/regular_quad_mesh/*.obj; do
+for file in ../data/post_process/*.obj; do
         if [ -d "$file" ]; then
             echo "$(basename "$file")"
         else

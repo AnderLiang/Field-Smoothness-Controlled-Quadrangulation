@@ -12,24 +12,15 @@ get_executable_name() {
             echo "generate_layout"
             ;;
         3)
-            echo "simplify_layout"
-            ;;
+            echo "quantization"
+            ;;   
         4)
-            echo "straighten_layout"
-            ;;   
-        5)
-            echo "subdivide_layout"
-            ;;   
-        6)
             echo "generate_closed_form_quad"
             ;;   
-        7)
+        5)
             echo "generate_pattern_based_quad"
             ;;
-        8)
-            echo "generate_triangle_face"
-            ;;
-        9)
+        6)
             echo "post_process"
             ;;
         *)
@@ -45,8 +36,8 @@ end_time=$(date +%s)
 if [ "$1" == "-a" ]; then
     > error.txt
     > time.txt
-    begin_idx=0
-    end_idx=9
+    begin_idx=1
+    end_idx=6
     length=1.0
 
     if [ $# -gt 2 ]; then
@@ -96,8 +87,8 @@ if [ "$1" == "-a" ]; then
 
     
 elif [ "$1" == "-f" ]; then
-    begin_idx=0
-    end_idx=9
+    begin_idx=1
+    end_idx=6
     debug_level=0
     length=1.0
     if [ $# -gt 2 ]; then
@@ -153,48 +144,12 @@ elif [ "$1" == "-c" ]; then
     fi
 
     for dir in "$TARGET_DIR"/*/; do
-        if [[ "$dir" != "$TARGET_DIR/origin/" && "$dir" != "$TARGET_DIR/result_analysis/"&& "$dir" != "$TARGET_DIR/input/" ]]; then
+        if [[ "$dir" != "$TARGET_DIR/origin/" && "$dir" != "$TARGET_DIR/result_analysis/"&& "$dir" != "$TARGET_DIR/input/"&& "$dir" != "$TARGET_DIR/huawei_test/" ]]; then
             rm -rf "${dir}"*
         fi
     done
     echo "已删除 $TARGET_DIR 下所有子文件夹的内容。"
     exit 0
-
-
-    echo "使用error_models.txt执行-a操作"
-    > error.txt
-    > time.txt
-    begin_idx=0
-    end_idx=9
-
-    if [ $# -gt 2 ]; then
-        begin_idx=$2
-        end_idx=$3
-    fi
-
-    while read -r filename; do
-        # echo $filename
-        execution_time=()
-        for (( i=begin_idx; i<=end_idx; i++ )); do
-            executable=$(get_executable_name $i)
-            start_time=$(date +%s)
-            timeout 600 ./$executable $filename 0 1.0
-            exit_status=$? 
-            end_time=$(date +%s)
-            tmp_time=$((end_time-start_time))
-            if [ $exit_status -eq 124 ]; then
-                echo "$filename $executable 超时" >> error.txt
-            fi
-            if [ $exit_status -ne 0 ]; then
-                echo "$filename $executable 失败" >> error.txt
-            fi
-            execution_time+=("$tmp_time")
-
-        done
-        IFS=','
-        echo "$filename,${execution_time[*]}" >> time.txt
-    done < "error_models.txt"
-      exit 0
 else
     echo "未知选项：$1"
     exit 0
